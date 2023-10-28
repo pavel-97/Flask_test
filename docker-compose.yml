@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+
+  app:
+    build: .
+    command: flask --app main run --debug --host 0.0.0.0 --port 8080 --reload
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    ports:
+      - '8080:8080'
+    container_name: flast_test
+
+  redis:
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - ./redis_data:/redis_data/
+    container_name: flask_redis
